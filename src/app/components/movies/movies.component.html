@@ -1,0 +1,46 @@
+
+<h1 class="text-center text-white doc">Top Movies</h1>
+
+<div class="dropdown mb-5">
+    <button class="btn btn-secondary dropdown-toggle" type="button"  (click)="dropdown()">
+      Sort
+    </button>
+    <div *ngIf="sort" class="d-flex flex-column">
+      <a class="text-white" (click)="SortByAverage()" >Vote Average</a>
+      <a class="text-white" (click)="SortByCount()" >View Count</a>
+      <a class="text-white" (click)="SortByFeatured()" >Featured</a>
+    </div>
+  </div>
+<div class="lds-ring" *ngIf="!loaded"><div></div><div></div><div></div><div></div></div>
+
+<div class="col-12 search w-25">
+  <div class="input-group">
+    <input
+      type="search"
+      class="form-control rounded"
+      [(ngModel)]="searchInput"
+      (keyup)="Search()"
+      placeholder="Search"
+      aria-label="Search"
+      aria-describedby="search-addon"
+    />
+    <button type="button" class="btn btn-outline-primary">search</button>
+  </div>
+</div>
+<button class="btn btn-sm btn-success" routerLink="/">Home</button>
+<div class="row bg-warning m-auto p-2" *ngIf="loaded">
+  <div class="col-3" *ngFor="let movie of movies"  >
+    <div class="card">
+      <img src="{{ IMG_PATH + movie.backdrop_path }}" class="card-img-top" />
+      <div class="card-body">
+        <h5 class="card-title">{{ movie.title }}</h5>
+        <p class="text-muted">Vote Average: {{ movie.vote_average }}</p>
+        <p class="text-muted">View Count: {{ movie.vote_count }}</p>
+        <a (click)="ReadMore(movie)" class="btn btn-success"
+          >Read Description</a
+        >
+        <p *ngIf="show" class="description">{{ overview }}</p>
+      </div>
+    </div>
+  </div>
+</div>
